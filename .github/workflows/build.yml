@@ -16,13 +16,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '22'
 
       - name: Install dependencies
+        working-directory: ./sop-recorder
         run: npm install
 
       - name: Build app
+        working-directory: ./sop-recorder
         run: npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -30,6 +31,6 @@ jobs:
       - name: Upload release
         uses: softprops/action-gh-release@v1
         with:
-          files: release/*.exe
+          files: sop-recorder/release/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
