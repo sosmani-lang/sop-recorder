@@ -30,8 +30,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build app
-        run: npm run build
+      - name: Build renderer and main
+        run: npx electron-vite build
+
+      - name: List dist folder
+        run: dir dist /s
+        shell: cmd
+
+      - name: Package with electron-builder
+        run: npx electron-builder --win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
