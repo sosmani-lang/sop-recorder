@@ -29,7 +29,7 @@ module.exports = {
   },
   publish: {
     provider: "github",
-    owner: "YOUR_GITHUB_USERNAME",
+    owner: "sosmani-lang",
     repo: "sop-recorder"
   },
   extraResources: [
@@ -38,5 +38,10 @@ module.exports = {
       to: "resources/",
       filter: ["**/*"]
     }
+  ],
+  asarUnpack: [
+    "node_modules/uiohook-rawinput/**/*",
+    "node_modules/screenshot-desktop/**/*",
+    "node_modules/active-win/**/*"
   ]
 }
