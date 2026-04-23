@@ -18,12 +18,19 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Find and move files to root
+        run: |
+          $sub = Get-ChildItem -Directory | Where-Object { $_.Name -eq "sop-recorder" } | Select-Object -First 1
+          if ($sub) {
+            Get-ChildItem -Path $sub.FullName | Move-Item -Destination .
+            Remove-Item $sub.FullName -Force -Recurse
+          }
+        shell: pwsh
+
       - name: Install dependencies
-        working-directory: ./sop-recorder
         run: npm install
 
       - name: Build app
-        working-directory: ./sop-recorder
         run: npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,6 +38,6 @@ jobs:
       - name: Upload release
         uses: softprops/action-gh-release@v1
         with:
-          files: sop-recorder/release/*.exe
+          files: release/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
