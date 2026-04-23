@@ -1,18 +1,14 @@
-import { defineConfig } from 'electron-vite'
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
 export default defineConfig({
   main: {
+    plugins: [externalizeDepsPlugin()],
     build: {
       outDir: 'dist/main',
-      rollupOptions: {
-        external: [
-          'iohook',
-          'screenshot-desktop',
-          'active-win',
-          'electron-updater'
-        ]
+      lib: {
+        entry: resolve('src/main/index.ts')
       }
     },
     resolve: {
@@ -23,14 +19,21 @@ export default defineConfig({
     }
   },
   preload: {
+    plugins: [externalizeDepsPlugin()],
     build: {
-      outDir: 'dist/preload'
+      outDir: 'dist/preload',
+      lib: {
+        entry: resolve('src/preload/index.ts')
+      }
     }
   },
   renderer: {
-    root: 'src/renderer',
+    root: resolve('src/renderer'),
     build: {
-      outDir: 'dist/renderer'
+      outDir: 'dist/renderer',
+      rollupOptions: {
+        input: resolve('src/renderer/index.html')
+      }
     },
     resolve: {
       alias: {
