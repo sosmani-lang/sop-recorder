@@ -1,5 +1,5 @@
 import { Step } from '../shared/types'
-import { UiohookMouse, uIOhook } from 'uiohook-rawinput'
+import { uIOhook, UiohookMouseEvent } from 'uiohook-napi'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const screenshot = require('screenshot-desktop')
@@ -31,7 +31,7 @@ async function getActiveWindow(): Promise<{ appName: string; windowTitle: string
   }
 }
 
-async function onMouseClick(event: UiohookMouse) {
+async function onMouseClick(event: UiohookMouseEvent) {
   if (!isRecording) return
 
   const [screenshot_base64, windowInfo] = await Promise.all([
