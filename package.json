@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Desktop SOP Recorder for Windows",
   "author": "sosmani-lang",
-  "main": "dist/main/index.js",
+  "main": "dist/main/index.cjs",
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build && electron-builder",
