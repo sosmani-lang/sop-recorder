@@ -40,7 +40,7 @@ module.exports = {
     }
   ],
   asarUnpack: [
-    "node_modules/uiohook-rawinput/**/*",
+    "node_modules/uiohook-napi/**/*",
     "node_modules/screenshot-desktop/**/*",
     "node_modules/active-win/**/*"
   ]
