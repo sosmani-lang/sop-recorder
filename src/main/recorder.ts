@@ -1,7 +1,6 @@
 import { Step } from '../shared/types'
+import { UiohookMouse, uIOhook } from 'uiohook-rawinput'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const iohook = require('iohook')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const screenshot = require('screenshot-desktop')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -11,7 +10,6 @@ let steps: Step[] = []
 let isRecording = false
 let stepCounter = 1
 
-// Captures a screenshot and returns it as base64
 async function captureScreenshot(): Promise<string> {
   try {
     const img: Buffer = await screenshot({ format: 'png' })
@@ -21,7 +19,6 @@ async function captureScreenshot(): Promise<string> {
   }
 }
 
-// Gets the currently active window info
 async function getActiveWindow(): Promise<{ appName: string; windowTitle: string }> {
   try {
     const win = await activeWin()
@@ -34,8 +31,7 @@ async function getActiveWindow(): Promise<{ appName: string; windowTitle: string
   }
 }
 
-// Called on every mouse click
-async function onMouseClick(event: { x: number; y: number }) {
+async function onMouseClick(event: UiohookMouse) {
   if (!isRecording) return
 
   const [screenshot_base64, windowInfo] = await Promise.all([
@@ -57,25 +53,21 @@ async function onMouseClick(event: { x: number; y: number }) {
   steps.push(step)
 }
 
-// Start recording user actions
 export function startRecording(): void {
   steps = []
   stepCounter = 1
   isRecording = true
-
-  iohook.on('mouseclick', onMouseClick)
-  iohook.start()
+  uIOhook.on('mousedown', onMouseClick)
+  uIOhook.start()
 }
 
-// Stop recording and return all captured steps
 export function stopRecording(): Step[] {
   isRecording = false
-  iohook.off('mouseclick', onMouseClick)
-  iohook.stop()
+  uIOhook.off('mousedown', onMouseClick)
+  uIOhook.stop()
   return steps
 }
 
-// Get current steps without stopping
 export function getSteps(): Step[] {
   return steps
 }
