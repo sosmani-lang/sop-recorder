@@ -15,7 +15,7 @@
     "active-win": "^8.1.0",
     "axios": "^1.6.0",
     "electron-updater": "^6.1.0",
-    "iohook": "^0.9.3",
+    "uiohook-rawinput": "^1.5.2",
     "screenshot-desktop": "^1.12.7",
     "uuid": "^9.0.0"
   },
